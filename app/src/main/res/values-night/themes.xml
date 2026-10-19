@@ -1,0 +1,7 @@
+<resources>
+    <!-- Dark variant of Theme.OpenApApp: dark window background so the first frame
+         and system bars match the Compose dark color scheme (ui/Theme.kt). -->
+    <style name="Theme.OpenApApp" parent="android:Theme.Material.NoActionBar">
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
+</resources>

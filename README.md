@@ -12,12 +12,27 @@ gradle/libs.versions.toml                                   依存バージョ�
 app/build.gradle.kts                                         applicationId / namespace / 依存
 app/src/main/AndroidManifest.xml                             権限・Activity
 app/src/main/java/dev/apslop/apps/template/MainActivity.kt   画面 (Compose)
-app/src/main/java/dev/apslop/apps/template/ui/Theme.kt       配色
+app/src/main/java/dev/apslop/apps/template/ui/Theme.kt       配色 (ライト / ダーク)
 app/src/main/res/values/strings.xml                          表示文字列 (app_name など)
+app/src/main/res/values/themes.xml                           ウィンドウテーマ (ライト)
+app/src/main/res/values-night/themes.xml                     ウィンドウテーマ (ダーク)
 app/src/main/res/drawable/ic_launcher_*.xml                  アイコン (ベクター)
 .github/workflows/ci.yml                                     PR / main の自動ビルド
 .github/workflows/release.yml                                タグ push → APK を Release に添付
 ```
+
+## ダークモード
+
+端末のダークモード設定に自動で追従します。
+
+- Compose 側の配色は `ui/Theme.kt` の `LightColors` / `DarkColors`。
+- 起動直後のウィンドウ背景は `res/values/themes.xml` (ライト) と
+  `res/values-night/themes.xml` (ダーク) の `Theme.OpenApApp`。
+- ステータスバー / ナビゲーションバーのアイコン色は `enableEdgeToEdge()` が
+  システム設定から自動で切り替えます。
+
+色を変えるときは `LightColors` / `DarkColors` の両方を更新してください
+(片方だけだとダークモードでコントラストが崩れます)。
 
 ## ローカルで動かす
 
@@ -28,6 +43,13 @@ app/src/main/res/drawable/ic_launcher_*.xml                  アイコン (ベ�
 ```
 
 Android Studio で開く場合はルートディレクトリを開くだけで動きます。
+
+ダークモードの確認は端末設定の切り替えのほか、エミュレータで:
+
+```sh
+adb shell cmd uimode night yes   # ダーク
+adb shell cmd uimode night no    # ライト
+```
 
 ## リリースする
 
@@ -61,3 +83,5 @@ CI では環境変数 `APSLOP_VERSION_NAME` / `APSLOP_VERSION_CODE` で決まり
 - `versionCode` / `versionName` を固定値に書き換えない (CI が上書きできなくなる)
 
 詳細な制約は `TEMPLATE_RULES.md` を参照。
+
+このアプリは APSlop (AI が Android アプリを生成するプラットフォーム) によって生成されました。
